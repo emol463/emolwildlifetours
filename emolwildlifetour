@@ -1,0 +1,27 @@
+# Update main.html with contact form for Netlify integration
+main_with_form_html = main_html.replace(
+    '<section class="content" id="contact">',
+    '''<section class="content" id="contact-form">
+  <h2>Contact Us</h2>
+  <form name="contact" method="POST" data-netlify="true">
+    <input type="text" name="name" placeholder="Your Full Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+<section class="content" id="contact">'''
+)
+
+# Save updated main.html with contact form
+updated_main_path = output_dir / "main.html"
+updated_main_path.write_text(main_with_form_html, encoding="utf-8")
+
+# Create updated ZIP archive
+updated_zip_path = "/mnt/data/Emol_Tourism_Website_With_Form.zip"
+with ZipFile(updated_zip_path, "w") as zipf:
+    zipf.write(index_path, arcname="index.html")
+    zipf.write(updated_main_path, arcname="main.html")
+
+updated_zip_path  # Path to download the updated site with contact form
+
